@@ -32,7 +32,6 @@ function invade(target, name, callback) {
 
 // 自定义配置
 const addCustomize = () => (config) => {
-  console.log(config.devtool);
   config.output.publicPath = '/';
   if (!isProduction) {
     // 循环检测工具
@@ -61,6 +60,7 @@ const addCustomize = () => (config) => {
       '.chunk',
       '',
     );
+
     // 美化打包后 css 文件名
     invade(config.plugins, 'MiniCssExtractPlugin', (e) => {
       e.options.chunkFilename = e.options.chunkFilename.replace('.chunk', '');
@@ -91,6 +91,7 @@ const addCustomize = () => (config) => {
         inline: /runtime\..*\.js$/,
       }),
     );
+
     config.optimization.runtimeChunk = 'single';
   }
 
@@ -101,7 +102,6 @@ const addCustomize = () => (config) => {
 const devServerConfig = () => (config) => {
   return {
     ...config,
-    // 服务开启gzip
     compress: true,
     proxy: {
       '/api': {
@@ -119,7 +119,7 @@ module.exports = {
   webpack: override(
     // 增加别名
     addWebpackAlias({
-      '@': resolve(__dirname, 'src'),
+      '@': resolve('src'),
     }),
 
     // 增加装饰器
@@ -141,10 +141,8 @@ module.exports = {
 
     // 按需引入组件
     fixBabelImports('import', {
-      libraryName: 'ppfish-mobile', // 组件库名称
-      libraryDirectory: 'es/components', // 组件所在目录
-      camel2DashComponentName: false, // 是否自动转换组件名称
-      style: true,
+      libraryName: 'antd-mobile',
+      style: 'css',
     }),
 
     // postcss 插件
@@ -159,9 +157,9 @@ module.exports = {
         exclude: [/node_modules/],
         propList: ['*', '!border-radius'],
       }),
-      require('postcss-normalize')({
-        forceImport: true,
-      }),
+      // require('postcss-normalize')({
+      //   forceImport: true,
+      // }),
     ]),
 
     process.env.REACT_APP_BUNDLE_VISUALIZE == 1 &&
@@ -186,12 +184,13 @@ module.exports = {
         if (resolve) {
           resolve.options.sourceMap = true; // resolve-url-loader
         }
-        // pre-processor
+
         if (processor && processor.loader.includes('less-loader')) {
           processor.options.sourceMap = true; // sass-loader
         }
       }),
   ),
+
   devServer: overrideDevServer(devServerConfig()),
 
   paths: function (paths, env) {

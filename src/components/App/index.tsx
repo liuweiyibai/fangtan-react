@@ -1,30 +1,20 @@
-import React, { FC } from 'react';
-import logo from './logo.svg';
-import styles from './App.module.less';
-
-// console.log('==============app===================');
-// console.log(styles);
-// console.log('====================================');
-
-const App: FC = () => {
+import React from 'react';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import NotFound from '@/pages/NotFound';
+import BasicLayout from '@/layouts/BasicLayout';
+const App: React.FC = () => {
   return (
-    <div className={`${styles.App} ${styles.text}`}>
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Switch>
+        <Route component={BasicLayout} />
+        <Route component={NotFound} />
+      </Switch>
+    </BrowserRouter>
   );
 };
 
 export default App;
+
+// The following changes are being made to your tsconfig.json file:
+//   - compilerOptions.jsx must be react-jsx (to support the new JSX transform in React 17)
+//   - compilerOptions.paths must not be set (aliased imports are not supported)
