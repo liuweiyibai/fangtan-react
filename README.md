@@ -37,3 +37,9 @@ npm i dotenv-cli -g
 ## ts 配置文件不支持 paths
 
 [参考地址](https://www.yuque.com/tuanchang-d1rgt/xiycpz/fy5az7?language=en-us)
+
+## 懒加载
+
+```bash
+yarn add @loadable/component
+```

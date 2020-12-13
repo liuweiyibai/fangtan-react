@@ -1,7 +1,10 @@
 import React, { FC, Fragment } from 'react';
-import PageFooter from '@/components/PageFooter';
 import { Route } from 'react-router-dom';
-import Home from '@/pages/Home';
+
+import lazy from '@/utils/lazy';
+import PageFooter from '@/components/PageFooter';
+
+const Home = lazy('Home');
 
 const BasicLayout: FC = () => {
   return (

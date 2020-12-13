@@ -1087,7 +1087,7 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.10.1", "@babel/runtime@^7.10.2", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.1", "@babel/runtime@^7.12.5", "@babel/runtime@^7.5.5", "@babel/runtime@^7.7.2", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.10.1", "@babel/runtime@^7.10.2", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.1", "@babel/runtime@^7.12.5", "@babel/runtime@^7.5.5", "@babel/runtime@^7.7.2", "@babel/runtime@^7.7.7", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
   version "7.12.5"
   resolved "https://registry.npm.taobao.org/@babel/runtime/download/@babel/runtime-7.12.5.tgz?cache=0&sync_timestamp=1604441085826&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40babel%2Fruntime%2Fdownload%2F%40babel%2Fruntime-7.12.5.tgz#410e7e487441e1b360c29be715d870d9b985882e"
   integrity sha1-QQ5+SHRB4bNgwpvnFdhw2bmFiC4=
@@ -1389,6 +1389,15 @@
     "@types/node" "*"
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
+
+"@loadable/component@^5.14.1":
+  version "5.14.1"
+  resolved "https://registry.npm.taobao.org/@loadable/component/download/@loadable/component-5.14.1.tgz?cache=0&sync_timestamp=1603352624475&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40loadable%2Fcomponent%2Fdownload%2F%40loadable%2Fcomponent-5.14.1.tgz#cacd807162430bb85ae085945318027a600adc85"
+  integrity sha1-ys2AcWJDC7ha4IWUUxgCemAK3IU=
+  dependencies:
+    "@babel/runtime" "^7.7.7"
+    hoist-non-react-statics "^3.3.1"
+    react-is "^16.12.0"
 
 "@most/multicast@^1.2.5":
   version "1.3.0"
@@ -1760,6 +1769,13 @@
   version "0.0.29"
   resolved "https://registry.npm.taobao.org/@types/json5/download/@types/json5-0.0.29.tgz?cache=0&sync_timestamp=1605053935006&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fjson5%2Fdownload%2F%40types%2Fjson5-0.0.29.tgz#ee28707ae94e11d2b827bcbe5270bcea7f3e71ee"
   integrity sha1-7ihweulOEdK4J7y+UnC86n8+ce4=
+
+"@types/loadable__component@^5.13.1":
+  version "5.13.1"
+  resolved "https://registry.npm.taobao.org/@types/loadable__component/download/@types/loadable__component-5.13.1.tgz#97c24081676a194b29722ff6e3c24a3676984f2e"
+  integrity sha1-l8JAgWdqGUspci/248JKNnaYTy4=
+  dependencies:
+    "@types/react" "*"
 
 "@types/minimatch@*":
   version "3.0.3"
@@ -5919,7 +5935,7 @@ hoist-non-react-statics@1.x:
   resolved "https://registry.npm.taobao.org/hoist-non-react-statics/download/hoist-non-react-statics-1.2.0.tgz#aa448cf0986d55cc40773b17174b7dd066cb7cfb"
   integrity sha1-qkSM8JhtVcxAdzsXF0t90GbLfPs=
 
-hoist-non-react-statics@^3.1.0:
+hoist-non-react-statics@^3.1.0, hoist-non-react-statics@^3.3.1:
   version "3.3.2"
   resolved "https://registry.npm.taobao.org/hoist-non-react-statics/download/hoist-non-react-statics-3.3.2.tgz#ece0acaf71d62c2969c2ec59feff42a4b1a85b45"
   integrity sha1-7OCsr3HWLClpwuxZ/v9CpLGoW0U=

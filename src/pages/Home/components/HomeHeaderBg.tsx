@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 
-export default memo(
+const HomeHeaderBg: React.FC = memo(
   (): JSX.Element => {
     return (
       <div className="tu afterclear">
@@ -9,3 +9,7 @@ export default memo(
     );
   },
 );
+
+HomeHeaderBg.displayName = 'home-header-bg';
+
+export default HomeHeaderBg;

@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 
-const PageLoading: FC<{}> = () => {
+const PageLoading: FC = () => {
   return (
     <div className="loading">
       <div className="loader">

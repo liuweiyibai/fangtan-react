@@ -7,7 +7,6 @@ const HomeListItem: React.FC = () => {
   return (
     <div className={styles['list-item']}>
       <div className={styles['left-tu']}>
-        <span></span>
         <img src={imgSrc} />
       </div>
       <div className={styles['right-des']}>
