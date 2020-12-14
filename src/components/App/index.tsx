@@ -1,13 +1,16 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import NotFound from '@/pages/NotFound';
 import BasicLayout from '@/layouts/BasicLayout';
+
 const App: React.FC = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/">
       <Switch>
-        <Route component={BasicLayout} />
-        <Route component={NotFound} />
+        <Route path="/404" component={NotFound} />
+        <Route path="/user/login" component={NotFound} />
+        <Route path="/user/register" component={NotFound} />
+        <Route path="/" component={BasicLayout} />
       </Switch>
     </BrowserRouter>
   );

@@ -1,15 +1,17 @@
-import React, { FC, Fragment } from 'react';
-import { Route } from 'react-router-dom';
-
-import lazy from '@/utils/lazy';
+import React, { FC, lazy, Fragment } from 'react';
+import { Route, Redirect, Switch } from 'react-router-dom';
 import PageFooter from '@/components/PageFooter';
 
-const Home = lazy('Home');
+const Home = lazy(() => import('@/pages/Home'));
 
 const BasicLayout: FC = () => {
   return (
     <Fragment>
-      <Route path="/home" exact component={Home} />
+      <Switch>
+        <Route path="/home" exact component={Home} />
+        <Route path="/" exact render={() => <Redirect to="/home" />} />
+        <Route render={() => <Redirect to="/404" />} />
+      </Switch>
       <PageFooter />
     </Fragment>
   );
