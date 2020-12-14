@@ -12,6 +12,7 @@ const {
   adjustStyleLoaders,
 } = require('customize-cra');
 
+const LodashWebpackPlugin = require('lodash-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const WebpackBar = require('webpackbar');
 const DashboardPlugin = require('webpack-dashboard/plugin');
@@ -69,18 +70,40 @@ const addCustomize = () => (config) => {
     config.optimization.splitChunks = {
       chunks: 'all',
       cacheGroups: {
-        libs: {
-          name: 'chunk-libs',
+        vendors: {
           test: /[\\/]node_modules[\\/]/,
-          priority: 10,
-          chunks: 'initial', // only package third parties that are initially dependent
+          name: 'vendors',
+          minSize: 50000,
+          minChunks: 1,
+          chunks: 'initial',
+          priority: 1, // 该配置项是设置处理的优先级，数值越大越优先处理，处理后优先级低的如果包含相同模块则不再处理
         },
         commons: {
-          name: 'chunk-commons',
-          test: resolve('src/components'), // can customize your rules
-          minChunks: 3, //  minimum common number
-          priority: 5,
-          reuseExistingChunk: true,
+          test: /[\\/]src[\\/]/,
+          name: 'commons',
+          minSize: 50000,
+          minChunks: 2,
+          chunks: 'initial',
+          priority: -1,
+          reuseExistingChunk: true, // 这个配置允许我们使用已经存在的代码块
+        },
+        antdMobile: {
+          name: 'antd-mobile', // 单独将 antd-design 拆包
+          priority: 20,
+          test: /[\\/]node_modules[\\/]antd-mobile[\\/]/,
+          chunks: 'all',
+        },
+        lodash: {
+          name: 'lodash', // 单独将 lodash 拆包
+          priority: 20,
+          test: /[\\/]node_modules[\\/]lodash[\\/]/,
+          chunks: 'all',
+        },
+        reactLib: {
+          name: 'react-lib', // 单独将 react系列 拆包
+          priority: 20,
+          test: /[\\/]node_modules[\\/](react|react-dom|react-router-dom)[\\/]/,
+          chunks: 'all',
         },
       },
     };
@@ -140,9 +163,15 @@ module.exports = {
     }),
 
     // 按需引入组件
-    fixBabelImports('import', {
-      libraryName: 'antd-mobile',
+    fixBabelImports('antd-mobile', {
       style: 'css',
+      libraryDirectory: 'es',
+    }),
+
+    // lodash 按需加载
+    fixBabelImports('lodash', {
+      libraryDirectory: 'es',
+      camel2DashComponentName: false,
     }),
 
     // postcss 插件
@@ -173,6 +202,12 @@ module.exports = {
       // 进度条
       new WebpackBar({
         profile: true,
+      }),
+
+      // lodash 按需加载
+      new LodashWebpackPlugin({
+        collections: true,
+        paths: true,
       }),
     ),
 
