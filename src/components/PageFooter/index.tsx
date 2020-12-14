@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TabBar } from 'antd-mobile';
+import { useHistory, useLocation } from 'react-router-dom';
 import styles from './index.module.less';
 import {
   BsHouseDoor,
@@ -13,6 +14,7 @@ interface ListItem {
   icon: JSX.Element;
   key: string;
 }
+
 const lists: ListItem[] = [
   {
     text: '首页',
@@ -37,7 +39,19 @@ const lists: ListItem[] = [
 ];
 
 const PageFooter: React.FC = () => {
-  const [selectedTab, setSelectedTab] = useState<string>('life');
+  const history = useHistory();
+  const location = useLocation();
+  const [selectedTab, setSelectedTab] = useState<string>('home');
+
+  useEffect(() => {
+    const { pathname } = location;
+    const item = lists.find((t) => pathname.indexOf(t.key) > -1);
+    if (item) {
+      setSelectedTab(item.key);
+    }
+    return () => {};
+  }, [location.pathname]);
+
   return (
     <footer className={styles['page-footer--layout']}>
       <TabBar
@@ -56,6 +70,7 @@ const PageFooter: React.FC = () => {
             selected={selectedTab === item.key}
             onPress={() => {
               setSelectedTab(item.key);
+              history.push(item.key);
             }}
           />
         ))}
