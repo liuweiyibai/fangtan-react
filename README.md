@@ -41,7 +41,9 @@ npm i dotenv-cli -g
 ## 懒加载
 
 ```bash
-yarn add @loadable/component
+yarn add @loadable/component # 或者
+yarn add react-loadable # 或者
+# 使用 react 自带 lazy
 ```
 
 ## lodash 按需加载
