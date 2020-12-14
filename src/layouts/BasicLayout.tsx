@@ -12,7 +12,9 @@ const BasicLayout: FC = () => {
         <Route path="/" exact render={() => <Redirect to="/home" />} />
         <Route render={() => <Redirect to="/404" />} />
       </Switch>
-      <PageFooter />
+      <div className="main-footer">
+        <PageFooter />
+      </div>
     </Fragment>
   );
 };

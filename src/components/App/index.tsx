@@ -1,7 +1,9 @@
-import React from 'react';
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import React, { lazy } from 'react';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import NotFound from '@/pages/NotFound';
 import BasicLayout from '@/layouts/BasicLayout';
+
+const HouseDetail = lazy(() => import('@/pages/HouseDetail'));
 
 const App: React.FC = () => {
   return (
@@ -10,6 +12,7 @@ const App: React.FC = () => {
         <Route path="/404" component={NotFound} />
         <Route path="/user/login" component={NotFound} />
         <Route path="/user/register" component={NotFound} />
+        <Route path="/house/detail/:houseId?" component={HouseDetail} />
         <Route path="/" component={BasicLayout} />
       </Switch>
     </BrowserRouter>
