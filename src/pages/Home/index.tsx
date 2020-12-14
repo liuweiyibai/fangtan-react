@@ -4,8 +4,11 @@ import homeBgSrc from '@/assets/images/index-banner.jpg';
 import HomeGrid from './components/HomeGrid';
 import HomeListItem from './components/HomeListItem';
 import HomeSearchBar from './components/HomeSearchBar';
+import { useDocTitle } from '@/utils/customHooks';
 
 const Home: React.FC = () => {
+  useDocTitle('首页');
+
   return (
     <Fragment>
       <div className={styles['home-header']}>
