@@ -8,7 +8,6 @@ import { useDocTitle } from '@/utils/customHooks';
 
 const Home: React.FC = () => {
   useDocTitle('首页');
-
   return (
     <Fragment>
       <div className={styles['home-header']}>

@@ -17,6 +17,7 @@ const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const WebpackBar = require('webpackbar');
 const DashboardPlugin = require('webpack-dashboard/plugin');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
+const WebpackBuildNotifierPlugin = require('webpack-build-notifier');
 
 const resolve = (dir) => path.resolve(__dirname, dir);
 const join = (dir) => path.join(__dirname, dir);
@@ -208,6 +209,11 @@ module.exports = {
       new LodashWebpackPlugin({
         collections: true,
         paths: true,
+      }),
+
+      new WebpackBuildNotifierPlugin({
+        title: 'mission complete',
+        suppressSuccess: true,
       }),
     ),
 
