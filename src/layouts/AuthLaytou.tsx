@@ -1,4 +1,4 @@
-// import React, { FC } from 'react';
+import React from 'react';
 
 export default () => {
   return <div>222</div>;
