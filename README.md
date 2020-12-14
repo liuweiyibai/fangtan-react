@@ -43,3 +43,26 @@ npm i dotenv-cli -g
 ```bash
 yarn add @loadable/component
 ```
+
+## lodash 按需加载
+
+```bash
+yarn add lodash-webpack-plugin --dev
+```
+
+增加如下代码
+
+```js
+const LodashWebpackPlugin = require('lodash-webpack-plugin')
+
+addWebpackPlugin({
+  new LodashWebpackPlugin({
+  collections: true,
+  paths: true
+  }),
+ })
+```
+
+## split-chunk 策略
+
+[参考地址](https://juejin.cn/post/6844903993647316999#heading-11)
