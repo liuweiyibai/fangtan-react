@@ -3,9 +3,13 @@ import { Icon } from 'antd-mobile';
 import imgSrc from '@/assets/images/list-tu.jpg';
 import styles from './HomeListItem.module.less';
 
-const HomeListItem: React.FC = () => {
+interface HomeListItemProps {
+  onClick: (e: React.MouseEvent) => void;
+}
+
+const HomeListItem: React.FC<HomeListItemProps> = ({ onClick: callback }) => {
   return (
-    <div className={styles['list-item']}>
+    <div className={styles['list-item']} onClick={(e) => callback(e)}>
       <div className={styles['left-tu']}>
         <img src={imgSrc} />
       </div>
