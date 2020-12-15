@@ -1,6 +1,10 @@
 import React, { Fragment } from 'react';
 import { ActionSheet } from 'antd-mobile';
+import { useHistory } from 'react-router-dom';
 import { BsBoxArrowUpRight, BsChevronLeft } from 'react-icons/bs';
+import HeaderLayout from '@/layouts/PageLayout/HeaderLayout';
+import BodyLayout from '@/layouts/PageLayout/BodyLayout';
+
 import styles from './index.module.less';
 
 interface dataListType {
@@ -25,7 +29,7 @@ const dataList: dataListType[] = [
   title: obj.title,
 }));
 
-const showShareActionSheetMulpitleLine = () => {
+const showShareActionSheet = () => {
   const data = [[...dataList]];
   ActionSheet.showShareActionSheetWithOptions(
     {
@@ -44,19 +48,29 @@ const showShareActionSheetMulpitleLine = () => {
 };
 
 const HouseDtail: React.FC = () => {
+  const history = useHistory();
+  const handleBack = () => {
+    history.goBack();
+  };
   return (
     <Fragment>
-      <div className={styles['header-bar--top']}>
-        <a href="#">
-          <BsChevronLeft />
-        </a>
-        <p>房源详情</p>
-        <a href="#" onClick={() => showShareActionSheetMulpitleLine()}>
-          <BsBoxArrowUpRight />
-        </a>
-      </div>
+      <HeaderLayout
+        text="房源详情"
+        leftIcon={
+          <a href="#" onClick={handleBack}>
+            <BsChevronLeft />
+          </a>
+        }
+        rightIcon={
+          <a href="#" onClick={showShareActionSheet}>
+            <BsBoxArrowUpRight />
+          </a>
+        }
+      />
 
-      <div className={styles['main-body--wrapper']}>4234</div>
+      <BodyLayout>
+        <section className={styles['house-detail--body']}></section>
+      </BodyLayout>
     </Fragment>
   );
 };
