@@ -19,12 +19,12 @@ const lists: ListItem[] = [
   {
     text: '首页',
     icon: <BsHouseDoor />,
-    key: 'home',
+    key: '/home',
   },
   {
     text: '我要出租',
     icon: <BsPersonDash />,
-    key: 'torent',
+    key: '/lease',
   },
   {
     text: '看房日程',
@@ -34,7 +34,7 @@ const lists: ListItem[] = [
   {
     text: '个人中心',
     icon: <BsPersonBoundingBox />,
-    key: 'me',
+    key: '/user/center',
   },
 ];
 
@@ -50,7 +50,7 @@ const PageFooter: React.FC = () => {
       setSelectedTab(item.key);
     }
     return () => {};
-  }, [location.pathname]);
+  }, [location]);
 
   return (
     <footer className={styles['page-footer--layout']}>
