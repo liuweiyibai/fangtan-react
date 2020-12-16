@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, FC } from 'react';
 import { useHistory } from 'react-router-dom';
 import styles from './home.module.less';
 import homeBgSrc from '@/assets/images/index-banner.jpg';
@@ -10,7 +10,7 @@ import BodyLayout from '@/layouts/PageLayout/BodyLayout';
 import FooterLayout from '@/layouts/PageLayout/FooterLayout';
 import PageFooter from '@/components/PageFooter';
 
-const Home: React.FC = () => {
+const Home: FC = () => {
   useDocTitle('首页');
   const history = useHistory();
   return (

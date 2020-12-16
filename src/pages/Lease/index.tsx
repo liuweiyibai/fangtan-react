@@ -13,6 +13,8 @@ import { BsChevronDown, BsSearch } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import HeaderLayout from '@/layouts/PageLayout/HeaderLayout';
 import BodyLayout from '@/layouts/PageLayout/BodyLayout';
+import FooterLayout from '@/layouts/PageLayout/FooterLayout';
+import PageFooter from '@/components/PageFooter';
 import styles from '@/pages/UserPage/index.module.less';
 import styles2 from './index.module.less';
 
@@ -111,12 +113,7 @@ const Lease: React.FC = () => {
             </Picker>
           </List>
           <WhiteSpace />
-          <p
-            style={{
-              color: '#555',
-              paddingLeft: '5px',
-            }}
-          >
+          <p className={styles2['lease-bottom--title']}>
             <Radio
               className={styles2['my-radio']}
               onChange={(e) => console.log('checkbox', e)}
@@ -124,10 +121,15 @@ const Lease: React.FC = () => {
             我已阅读阅读并同意 <Link to="/">《房嫂租房出租委托协议》</Link>
           </p>
           <div className={styles['user-form--btn']}>
-            <Button>登录</Button>
+            <Button>提交委托</Button>
           </div>
+          <WhiteSpace />
         </div>
       </BodyLayout>
+
+      <FooterLayout>
+        <PageFooter />
+      </FooterLayout>
     </Fragment>
   );
 };
