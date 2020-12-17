@@ -4,7 +4,7 @@ import imgSrc from '@/assets/images/list-tu.jpg';
 import styles from './HomeListItem.module.less';
 
 interface HomeListItemProps {
-  onClick: (e: React.MouseEvent) => void;
+  onClick: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
 const HomeListItem: React.FC<HomeListItemProps> = ({ onClick: callback }) => {
@@ -35,4 +35,5 @@ const HomeListItem: React.FC<HomeListItemProps> = ({ onClick: callback }) => {
     </div>
   );
 };
+
 export default HomeListItem;

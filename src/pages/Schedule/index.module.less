@@ -1,0 +1,68 @@
+.schedule-content--wrapper {
+  color: #333;
+  background-color: #fff;
+  :global {
+    .am-tabs-default-bar-tab-active {
+      color: @theme-color;
+      font-weight: bold;
+    }
+    .am-tabs-default-bar-underline {
+      height: 4px;
+      border-color: @theme-color;
+      background-color: @theme-color;
+    }
+
+    .am-whitespace.am-whitespace-md {
+      background-color: #dfdfdf;
+    }
+  }
+}
+
+.schedule-listitem--wrapper {
+  display: flex;
+  flex-direction: column;
+  .topsche-top {
+    box-sizing: border-box;
+    display: flex;
+    padding: 2% 0 2% 3%;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #dfdfdf;
+    color: @theme-color;
+    div {
+      p {
+        display: inline-block;
+      }
+    }
+    p {
+      margin: 0;
+      font-size: 14px;
+      color: #888;
+      :global {
+        svg {
+          color: @theme-color;
+          vertical-align: -1.5px;
+          margin-right: 2px;
+        }
+      }
+    }
+    .add {
+      margin-right: 10px;
+    }
+    .status {
+      color: #fff;
+      padding: 10px 10px 10px 25px;
+      background: url(~@/assets/images/huangbg.png) center no-repeat;
+      background-size: 100%;
+      &.status-green {
+        background-image: url(~@/assets/images/lvbg.png);
+      }
+    }
+  }
+
+  .topsche-bottom {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 3%;
+  }
+}

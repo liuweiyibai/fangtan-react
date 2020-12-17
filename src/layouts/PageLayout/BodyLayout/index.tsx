@@ -1,17 +1,30 @@
 import React from 'react';
+import classnames from 'classnames';
 import styles from '../PageLayout.module.less';
 
 interface MYFC<T> extends React.FC<T> {
   auth?: Boolean;
 }
 
-const PageBody: MYFC<{}> = ({ children }) => {
+interface IPageLayouProps {
+  style?: React.CSSProperties;
+  className?: string;
+}
+
+const PageBody: MYFC<IPageLayouProps> = ({ children, className }) => {
   return (
     <main className={styles['page-body--wrapper']}>
-      <div className={styles['page-body--content']}>{children}</div>
+      <div className={classnames(styles['page-body--content'], className)}>
+        {children}
+      </div>
     </main>
   );
 };
+
 PageBody.auth = true;
+
+PageBody.defaultProps = {
+  className: '',
+};
 
 export default PageBody;

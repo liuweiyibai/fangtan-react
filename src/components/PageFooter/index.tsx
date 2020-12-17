@@ -29,7 +29,7 @@ const lists: ListItem[] = [
   {
     text: '看房日程',
     icon: <BsCalendar />,
-    key: 'day',
+    key: '/schedule',
   },
   {
     text: '个人中心',
