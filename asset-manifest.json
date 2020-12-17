@@ -1,0 +1,37 @@
+{
+  "files": {
+    "antd-mobile.css": "/static/css/antd-mobile.3e95bc70.css",
+    "antd-mobile.js": "/static/js/antd-mobile.9d94f780.js",
+    "static/css/1.1eb9b8bd.css": "/static/css/1.1eb9b8bd.css",
+    "static/js/1.fff22786.js": "/static/js/1.fff22786.js",
+    "static/css/2.240ad23a.css": "/static/css/2.240ad23a.css",
+    "static/js/2.a0ab9fe3.js": "/static/js/2.a0ab9fe3.js",
+    "static/js/3.5c519f4e.js": "/static/js/3.5c519f4e.js",
+    "main.css": "/static/css/main.b0f190a2.css",
+    "main.js": "/static/js/main.dfa6883a.js",
+    "react-lib.js": "/static/js/react-lib.330acfb5.js",
+    "runtime.js": "/static/js/runtime.421019f0.js",
+    "static/css/7.e4b45ee3.css": "/static/css/7.e4b45ee3.css",
+    "static/js/7.95aecaf0.js": "/static/js/7.95aecaf0.js",
+    "static/css/8.2af2fb11.css": "/static/css/8.2af2fb11.css",
+    "static/js/8.61ff0ab0.js": "/static/js/8.61ff0ab0.js",
+    "static/css/9.1618ad71.css": "/static/css/9.1618ad71.css",
+    "static/js/9.8a7aa294.js": "/static/js/9.8a7aa294.js",
+    "static/css/10.436c8930.css": "/static/css/10.436c8930.css",
+    "static/js/10.cf491083.js": "/static/js/10.cf491083.js",
+    "static/css/11.1618ad71.css": "/static/css/11.1618ad71.css",
+    "static/js/11.570e83f7.js": "/static/js/11.570e83f7.js",
+    "static/js/12.bb6042eb.js": "/static/js/12.bb6042eb.js",
+    "index.html": "/index.html",
+    "static/media/index-banner.11b610ae.jpg": "/static/media/index-banner.11b610ae.jpg",
+    "static/media/list-tu.22321f0b.jpg": "/static/media/list-tu.22321f0b.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime.421019f0.js",
+    "static/css/antd-mobile.3e95bc70.css",
+    "static/js/antd-mobile.9d94f780.js",
+    "static/js/react-lib.330acfb5.js",
+    "static/css/main.b0f190a2.css",
+    "static/js/main.dfa6883a.js"
+  ]
+}
