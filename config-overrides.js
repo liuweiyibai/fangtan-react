@@ -34,7 +34,8 @@ function invade(target, name, callback) {
 
 // 自定义配置
 const addCustomize = () => (config) => {
-  config.output.publicPath = '/';
+  // config.output.publicPath = '/';
+  config.output.publicPath = 'https://liuweiyibai.github.io/fangtan-react/';
   if (!isProduction) {
     // 循环检测工具
     config.plugins.push(

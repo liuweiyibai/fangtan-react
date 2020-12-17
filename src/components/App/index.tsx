@@ -1,5 +1,11 @@
 import React, { lazy } from 'react';
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import {
+  // BrowserRouter,
+  HashRouter,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom';
 import NotFound from '@/pages/NotFound';
 import AuthRoute from '../AuthRoute';
 
@@ -13,7 +19,7 @@ const demo = () => <div>ceshi </div>;
 
 const App: React.FC = () => {
   return (
-    <BrowserRouter basename="/">
+    <HashRouter basename="/">
       <Switch>
         <Route path="/404" component={NotFound} />
         <AuthRoute
@@ -31,7 +37,7 @@ const App: React.FC = () => {
         <Route path="/" exact render={() => <Redirect to="/home" />} />
         <Route render={() => <Redirect to="/404" />} />
       </Switch>
-    </BrowserRouter>
+    </HashRouter>
   );
 };
 
