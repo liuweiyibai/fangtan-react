@@ -4,6 +4,11 @@ import PageLoading from '@/components/PageLoading';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
 
+/**
+ * 全局样式文件
+ */
+import './styles/global.less';
+
 ReactDOM.render(
   <React.StrictMode>
     <Suspense fallback={<PageLoading />}>

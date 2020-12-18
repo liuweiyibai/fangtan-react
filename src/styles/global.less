@@ -1,5 +1,5 @@
 /*
-这里就应该放一些变量和函数和 mixins 不然会被注入到每一个css中
+* 全局 css 样式重置
 */
 
 html,
@@ -16,7 +16,6 @@ body {
   overflow: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: red !important;
 }
 
 ul,
@@ -25,13 +24,17 @@ li {
   padding: 0;
   margin: 0;
 }
-:global {
-  #root {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100vh;
-    min-height: 100vh;
-    overflow: hidden;
-  }
+
+#root {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+// 定义的类名也能在组件中使用
+.test-class {
+  background-color: red;
 }
