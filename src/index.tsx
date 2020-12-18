@@ -1,5 +1,7 @@
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import store from './store';
 import PageLoading from '@/components/PageLoading';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
@@ -11,9 +13,11 @@ import './styles/global.less';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Suspense fallback={<PageLoading />}>
-      <App />
-    </Suspense>
+    <Provider store={store}>
+      <Suspense fallback={<PageLoading />}>
+        <App />
+      </Suspense>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root'),
 );

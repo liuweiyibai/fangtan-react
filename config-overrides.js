@@ -131,15 +131,20 @@ const devServerConfig = () => (config) => {
   return {
     ...config,
     // compress: true,
+    disableHostCheck: true,
+    hot: true,
     proxy: {
       '/api': {
-        target: 'localhost:7001',
+        target: 'http://localhost:7001',
         changeOrigin: true,
         pathRewrite: {
           '^/api': '/api',
         },
       },
     },
+    // after: (app) => {
+    //   console.log(app);
+    // },
   };
 };
 

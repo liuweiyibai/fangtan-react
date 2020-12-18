@@ -1,31 +1,31 @@
 import React, { Fragment, useEffect } from 'react';
 import { BsChevronLeft } from 'react-icons/bs';
 import { useHistory, Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { List, InputItem, Button, WhiteSpace } from 'antd-mobile';
 import { BsPhone, BsUnlock } from 'react-icons/bs';
 import HeaderLayout from '@/layouts/PageLayout/HeaderLayout';
 import BodyLayout from '@/layouts/PageLayout/BodyLayout';
 import styles from './index.module.less';
-import { userLogin } from '@/api/user';
+
+import { userLogin } from '@/store/actions/user';
 
 const UserLogin: React.FC<{}> = () => {
   const history = useHistory();
+  const dispatch = useDispatch();
   const handleBack = () => {
     history.goBack();
   };
 
-  useEffect(() => {
-    async function ss() {
-      const resp: Ajax.AjaxResponse = await userLogin({
-        name: '',
-        password: '22',
-      });
-      console.log(resp);
-    }
-    return () => {
-      // clean
-    };
-  }, []);
+  const handleClick = async () => {
+    const resp = await dispatch(
+      userLogin({
+        username: '',
+        password: '',
+      }),
+    );
+    console.log(resp);
+  };
 
   return (
     <Fragment>
@@ -49,7 +49,7 @@ const UserLogin: React.FC<{}> = () => {
           </List>
           <WhiteSpace />
           <div className={styles['user-form--btn']}>
-            <Button>登录</Button>
+            <Button onClick={handleClick}>登录</Button>
           </div>
           <WhiteSpace />
           <WhiteSpace />
