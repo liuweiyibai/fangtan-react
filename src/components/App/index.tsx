@@ -15,6 +15,7 @@ const HouseDetail = lazy(() => import('@/pages/HouseDetail'));
 const UserLogin = lazy(() => import('@/pages/UserPage/Login'));
 const UserRegister = lazy(() => import('@/pages/UserPage/Register'));
 const Schedule = lazy(() => import('@/pages/Schedule'));
+const Entire = lazy(() => import('@/pages/Entire'));
 
 const demo = () => <div>ceshi </div>;
 
@@ -33,6 +34,7 @@ const App: React.FC = () => {
         <Route path="/home" exact component={Home} />
         <Route path="/lease" exact component={Lease} />
         <Route path="/schedule" exact component={Schedule} />
+        <Route path="/entire/:houseTypeId?" exact component={Entire} />
         <Route path="/house/detail/:houseId?" exact component={HouseDetail} />
         <Route path="/user/login" exact component={UserLogin} />
         <Route path="/user/register" exact component={UserRegister} />

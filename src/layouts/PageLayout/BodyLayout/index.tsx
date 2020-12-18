@@ -11,9 +11,9 @@ interface IPageLayouProps {
   className?: string;
 }
 
-const PageBody: MYFC<IPageLayouProps> = ({ children, className }) => {
+const PageBody: MYFC<IPageLayouProps> = ({ children, className, style }) => {
   return (
-    <main className={styles['page-body--wrapper']}>
+    <main className={styles['page-body--wrapper']} style={style}>
       <div className={classnames(styles['page-body--content'], className)}>
         {children}
       </div>

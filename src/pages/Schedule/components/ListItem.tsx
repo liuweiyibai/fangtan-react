@@ -29,7 +29,7 @@ const ListItem: React.FC<IListItemProps> = ({ status }) => {
         </div>
         <p className={classes}>正在确认</p>
       </div>
-      <div className={styles['topsche-bottom']}>
+      <div className={styles['topsche-bottom'] + ' list-has-padding'}>
         <HomeListItem onClick={() => alert(1)} />
       </div>
     </div>
