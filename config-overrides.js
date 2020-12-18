@@ -123,6 +123,14 @@ const addCustomize = () => (config) => {
     config.optimization.runtimeChunk = 'single';
   }
 
+  // const loaders = config.module.rules.find((rule) => Array.isArray(rule.oneOf))
+  //   .oneOf;
+  // const fs = require('fs');
+  // fs.writeFileSync('a.json', JSON.stringify(loaders));
+  // loaders[7].use.push({
+
+  // });
+
   return config;
 };
 
@@ -155,7 +163,8 @@ module.exports = {
 
     // 添加 less 的使用
     addLessLoader({
-      additionalData: `@import "${join('./src/styles/global.less')}";`,
+      // 也可以在上面 loader 中添加
+      additionalData: `@import "${join('./src/styles/variable.less')}";`,
       lessOptions: {
         strictMath: true,
         noIeCompat: true,
@@ -223,7 +232,10 @@ module.exports = {
 
     // 开发模式下生成  css souceMap
     !isProduction &&
-      adjustStyleLoaders(({ use: [, css, postcss, resolve, processor] }) => {
+      adjustStyleLoaders(({ use }) => {
+        // use [] 包括所有的 style系列loader
+
+        const [, css, postcss, resolve, processor] = use;
         css.options.sourceMap = true; // css-loader
         postcss.options.sourceMap = true; // postcss-loader
         if (resolve) {
@@ -231,7 +243,14 @@ module.exports = {
         }
 
         if (processor && processor.loader.includes('less-loader')) {
-          processor.options.sourceMap = true; // sass-loader
+          processor.options.sourceMap = true; // less-loader
+          use.push({
+            loader: 'style-resources-loader',
+            options: {
+              injector: 'append',
+              patterns: path.resolve(__dirname, 'src/styles/global.less'), //全局引入公共的scss 文件
+            },
+          });
         }
       }),
   ),
