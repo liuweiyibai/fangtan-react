@@ -4,6 +4,7 @@ declare module '*.less';
 declare module '*.scss';
 declare module '*.png';
 declare module '*.jpg';
+
 declare module '*.svg' {
   export function ReactComponent(
     props: React.SVGProps<SVGSVGElement>,
@@ -14,4 +15,18 @@ declare module '*.svg' {
 declare module '*.module.less' {
   const classes: { [key: string]: string };
   export default classes;
+}
+// declare module 'whatwg-fetch';
+declare namespace Ajax {
+  // axios 返回数据
+  export interface AxiosResponse<T> {
+    data: AjaxResponse<T>;
+  }
+
+  // 请求接口数据
+  export interface AjaxResponse<T = {}> {
+    code?: number;
+    data: T;
+    message?: string;
+  }
 }

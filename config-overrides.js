@@ -130,10 +130,10 @@ const addCustomize = () => (config) => {
 const devServerConfig = () => (config) => {
   return {
     ...config,
-    compress: true,
+    // compress: true,
     proxy: {
       '/api': {
-        target: 'xxx',
+        target: 'localhost:7001',
         changeOrigin: true,
         pathRewrite: {
           '^/api': '/api',
