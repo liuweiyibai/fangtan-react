@@ -1,6 +1,7 @@
 import axios, {
-  AxiosInstance,
+  // AxiosInstance,
   AxiosRequestConfig,
+  AxiosResponse,
   Method as AxiosMethod,
 } from 'axios';
 // import {PageLoading} from 'an
@@ -26,14 +27,14 @@ export interface AxiosRequest {
   responseType?: ResponseType;
 }
 
-export interface AxiosResponse<T> {
-  data: T;
-  headers: any;
-  request?: any;
-  status: number;
-  statusText: string;
-  config: AxiosRequest;
-}
+// export interface AxiosResponse<T> {
+//   data: T;
+//   headers: any;
+//   request?: any;
+//   status: number;
+//   statusText: string;
+//   config: AxiosRequest;
+// }
 
 // export interface CustomResponse {
 //   readonly status: boolean;
@@ -117,6 +118,7 @@ instance.interceptors.request.use(
 // 添加响应拦截器
 instance.interceptors.response.use(
   (response) => {
+    // AxiosResponse<Ajax.AjaxResponse>
     removePending(response.config);
     const errorCode = response?.data?.errorCode;
     switch (errorCode) {
@@ -127,7 +129,7 @@ instance.interceptors.response.use(
         break;
     }
 
-    return response.data;
+    return response?.data;
   },
   async (error) => {
     const response = error.response;

@@ -21,7 +21,7 @@ api.get('/test', function (req, res) {
 });
 api.post(`/user/login`, (req, res) => {
   res.json({
-    code: 200,
+    code: 400,
     data: {
       username: 'james',
       token: '2222',

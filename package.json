@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@babel/plugin-proposal-decorators": "^7.12.1",
+    "@reduxjs/toolkit": "^1.5.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -16,6 +17,7 @@
     "@types/react-redux": "^7.1.12",
     "@types/react-router-dom": "^5.1.6",
     "@types/redux-logger": "^3.0.8",
+    "@types/redux-persist": "^4.3.1",
     "@types/redux-thunk": "^2.1.0",
     "@types/reselect": "^2.2.0",
     "antd-mobile": "^2.3.4",
@@ -33,14 +35,13 @@
     "react-redux": "^7.2.2",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
-    "recoil": "^0.1.2",
     "redux": "^4.0.5",
     "redux-logger": "^3.0.6",
+    "redux-persist": "^6.0.0",
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
     "typescript": "^4.1.3",
-    "web-vitals": "^0.2.4",
-    "whatwg-fetch": "^3.5.0"
+    "web-vitals": "^0.2.4"
   },
   "scripts": {
     "start": "react-app-rewired start",
@@ -88,6 +89,7 @@
   },
   "devDependencies": {
     "@types/classnames": "^2.2.11",
+    "@types/webpack-env": "^1.16.0",
     "@typescript-eslint/eslint-plugin": "^4.9.1",
     "@typescript-eslint/parser": "^4.9.1",
     "circular-dependency-plugin": "^5.2.2",

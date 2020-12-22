@@ -1,11 +1,5 @@
 import React, { lazy } from 'react';
-import {
-  // BrowserRouter,
-  HashRouter,
-  Switch,
-  Route,
-  Redirect,
-} from 'react-router-dom';
+import { HashRouter, Switch, Route, Redirect } from 'react-router-dom';
 import NotFound from '@/pages/NotFound';
 import AuthRoute from '../AuthRoute';
 

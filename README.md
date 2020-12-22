@@ -68,3 +68,24 @@ addWebpackPlugin({
 ## split-chunk 策略
 
 [参考地址](https://juejin.cn/post/6844903993647316999#heading-11)
+
+## redux 添加 hmr
+
+[参考地址](https://redux-toolkit.js.org/tutorials/advanced-tutorial#store-setup-and-hmr)
+
+```js
+if (process.env.NODE_ENV === 'development' && module.hot) {
+  module.hot.accept('./rootReducer', () => {
+    const newRootReducer = require('./rootReducer').default;
+    store.replaceReducer(newRootReducer);
+  });
+}
+// 报错 module 的错误时候
+```
+
+1. `yarn add @types/webpack-env --dev`
+2. 在 `tsconfig.json` 文件中 `compilerOptions` 添加 `"types": ["webpack-env"]`
+
+## 热更新
+
+[react-hot-loader](https://juejin.cn/post/6844904016581754888#heading-12)

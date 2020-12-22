@@ -1,16 +1,18 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useState } from 'react';
 import { BsChevronLeft } from 'react-icons/bs';
 import { useHistory, Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import { Toast } from 'antd-mobile';
 import { List, InputItem, Button, WhiteSpace } from 'antd-mobile';
 import { BsPhone, BsUnlock } from 'react-icons/bs';
 import HeaderLayout from '@/layouts/PageLayout/HeaderLayout';
 import BodyLayout from '@/layouts/PageLayout/BodyLayout';
+import { fetchUserLogin } from '@/store/system/thunks';
+
 import styles from './index.module.less';
 
-import { userLogin } from '@/store/actions/user';
-
 const UserLogin: React.FC<{}> = () => {
+  const [loading, setLoading] = useState<boolean>(false);
   const history = useHistory();
   const dispatch = useDispatch();
   const handleBack = () => {
@@ -18,13 +20,20 @@ const UserLogin: React.FC<{}> = () => {
   };
 
   const handleClick = async () => {
-    const resp = await dispatch(
-      userLogin({
-        username: '',
-        password: '',
-      }),
-    );
-    console.log(resp);
+    setLoading(true);
+    try {
+      const resp = await dispatch(
+        fetchUserLogin({
+          username: '',
+          password: '',
+        }),
+      );
+      console.log(resp);
+      setLoading(false);
+    } catch (error) {
+      Toast.fail(error.message || '用户名或密码错误！');
+      setLoading(false);
+    }
   };
 
   return (
@@ -49,7 +58,9 @@ const UserLogin: React.FC<{}> = () => {
           </List>
           <WhiteSpace />
           <div className={styles['user-form--btn']}>
-            <Button onClick={handleClick}>登录</Button>
+            <Button disabled={loading} loading={loading} onClick={handleClick}>
+              登录
+            </Button>
           </div>
           <WhiteSpace />
           <WhiteSpace />
