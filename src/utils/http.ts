@@ -1,8 +1,4 @@
-import axios, {
-  // AxiosInstance,
-  AxiosRequestConfig,
-  Method as AxiosMethod,
-} from 'axios';
+import axios, { AxiosRequestConfig, Method as AxiosMethod } from 'axios';
 
 export type Method = 'GET' | 'POST' | 'PUT' | 'DELETE' | AxiosMethod;
 
@@ -13,47 +9,6 @@ export type ResponseType =
   | 'json'
   | 'text'
   | 'stream';
-
-// export interface AxiosRequest {
-//   baseURL?: string;
-//   url: string;
-//   data?: any;
-//   params?: any;
-//   method?: Method;
-//   headers?: any;
-//   timeout?: number;
-//   responseType?: ResponseType;
-// }
-
-// export interface AxiosResponse<T> {
-//   data: T;
-//   headers: any;
-//   request?: any;
-//   status: number;
-//   statusText: string;
-//   config: AxiosRequest;
-// }
-
-// export interface CustomResponse {
-//   readonly status: boolean;
-//   readonly message: string;
-//   data: any;
-//   origin?: any;
-// }
-
-// export interface GetDemo {
-//   id: number;
-//   str: string;
-// }
-
-// export interface PostDemo {
-//   id: number;
-//   list: Array<{
-//     id: number;
-//     version: number;
-//   }>;
-// }
-
 export interface PendingType {
   url?: string;
   method: AxiosMethod;
