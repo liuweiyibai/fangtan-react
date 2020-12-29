@@ -1,9 +1,8 @@
 import axios, {
-  AxiosInstance,
+  // AxiosInstance,
   AxiosRequestConfig,
   Method as AxiosMethod,
 } from 'axios';
-// import {PageLoading} from 'an
 
 export type Method = 'GET' | 'POST' | 'PUT' | 'DELETE' | AxiosMethod;
 
@@ -15,25 +14,25 @@ export type ResponseType =
   | 'text'
   | 'stream';
 
-export interface AxiosRequest {
-  baseURL?: string;
-  url: string;
-  data?: any;
-  params?: any;
-  method?: Method;
-  headers?: any;
-  timeout?: number;
-  responseType?: ResponseType;
-}
+// export interface AxiosRequest {
+//   baseURL?: string;
+//   url: string;
+//   data?: any;
+//   params?: any;
+//   method?: Method;
+//   headers?: any;
+//   timeout?: number;
+//   responseType?: ResponseType;
+// }
 
-export interface AxiosResponse<T> {
-  data: T;
-  headers: any;
-  request?: any;
-  status: number;
-  statusText: string;
-  config: AxiosRequest;
-}
+// export interface AxiosResponse<T> {
+//   data: T;
+//   headers: any;
+//   request?: any;
+//   status: number;
+//   statusText: string;
+//   config: AxiosRequest;
+// }
 
 // export interface CustomResponse {
 //   readonly status: boolean;
@@ -57,7 +56,7 @@ export interface AxiosResponse<T> {
 
 export interface PendingType {
   url?: string;
-  method: Method;
+  method: AxiosMethod;
   params: any;
   data: any;
   cancel: Function;
@@ -68,7 +67,7 @@ const pending: Array<PendingType> = [];
 const CancelToken = axios.CancelToken;
 
 // axios 实例
-const instance = axios.create({
+const instanceHttp = axios.create({
   timeout: 10000,
   responseType: 'json',
   baseURL: '/api',
@@ -95,7 +94,7 @@ const removePending = (config: AxiosRequestConfig) => {
 };
 
 // 添加请求拦截器
-instance.interceptors.request.use(
+instanceHttp.interceptors.request.use(
   (request) => {
     removePending(request);
     request.cancelToken = new CancelToken((c) => {
@@ -115,7 +114,7 @@ instance.interceptors.request.use(
 );
 
 // 添加响应拦截器
-instance.interceptors.response.use(
+instanceHttp.interceptors.response.use(
   (response) => {
     removePending(response.config);
     const errorCode = response?.data?.errorCode;
@@ -126,7 +125,8 @@ instance.interceptors.response.use(
       default:
         break;
     }
-
+    // 这里返回 axios.data 此时真正的后端返回
+    // return response.data;
     return response.data;
   },
   async (error) => {
@@ -173,7 +173,7 @@ instance.interceptors.response.use(
       });
       // instance重试请求的Promise
       await backoff;
-      return await instance(config);
+      return await instanceHttp(config);
     }
 
     // eslint-disable-next-line
@@ -181,4 +181,11 @@ instance.interceptors.response.use(
   },
 );
 
-export default instance;
+/**
+ * 再封装request方法
+ * 避免接口定义时，泛型参数传入过多的问题
+ * 可以通过泛型参数来添加到接口请求具体的返回值类型
+ */
+export default <T>(config: AxiosRequestConfig) =>
+  // ! 第二个泛型参数是可以直接定义响应值结构的
+  instanceHttp.request<null, Ajax.AjaxResponse<T>>(config);
