@@ -1,7 +1,11 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
-import reducer from './reducers';
+import { routerMiddleware } from 'connected-react-router';
+import history from '@/utils/history';
+import rootReducer, { RootState } from './reducers';
+
+const isProduction = process.env.NODE_ENV === 'production';
 
 /**
  * 参考地址
@@ -9,14 +13,10 @@ import reducer from './reducers';
  */
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-let middlewares = [thunk, createLogger()];
-
-if (process.env.NODE_ENV === 'production') {
-  middlewares = [thunk];
-}
+let middlewares = [thunk, routerMiddleware(history)];
 
 const store = createStore(
-  reducer,
+  rootReducer,
   composeEnhancers(applyMiddleware(...middlewares)),
 );
 
