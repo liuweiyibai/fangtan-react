@@ -2,7 +2,7 @@ import React from 'react';
 import classnames from 'classnames';
 import styles from '../PageLayout.module.less';
 
-interface MYFC<T> extends React.FC<T> {
+interface MYFC<P> extends React.FC<P> {
   auth?: Boolean;
 }
 
@@ -22,9 +22,12 @@ const PageBody: MYFC<IPageLayouProps> = ({ children, className, style }) => {
 };
 
 PageBody.auth = true;
-
 PageBody.defaultProps = {
   className: '',
+};
+PageBody.defaultProps = {
+  className: '',
+  style: { background: 'red' },
 };
 
 export default PageBody;
