@@ -1,3 +1,22 @@
 .house-detail--body {
   width: 100%;
+  :global {
+    .slider-decorator-0 {
+      display: none;
+    }
+  }
+}
+.house-detail-carousel {
+  img {
+    width: 100%;
+  }
+}
+
+.house-detail--footer {
+  background-color: #f58611;
+  color: #fff;
+  border-radius: 0;
+  &::after {
+    content: none;
+  }
 }

@@ -18,17 +18,17 @@ declare module '*.module.less' {
 }
 // declare module 'whatwg-fetch';
 declare namespace Ajax {
-  // // axios 返回数据
+  // axios 返回数据
   // export interface AxiosResponse<T> {
   //   data: AjaxResponse<T>;
   // }
 
   // 请求接口数据
-  export interface AjaxResponse<T = any> {
-    code?: number;
+  export interface AjaxResponse<T = {}> {
     data: T;
-    message?: string;
-    errorCode?: number | string;
+    status?: number;
+    msg?: string;
+    [key: string]: any;
   }
 }
 

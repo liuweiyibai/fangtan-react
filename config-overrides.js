@@ -23,6 +23,7 @@ const resolve = (dir) => path.resolve(__dirname, dir);
 const join = (dir) => path.join(__dirname, dir);
 
 const isProduction = process.env.NODE_ENV === 'production';
+// const REACT_APP_BASE_API = process.env.REACT_APP_BASE_API;
 
 const publicPath = isProduction
   ? 'https://liuweiyibai.github.io/fangtan-react/'
@@ -133,18 +134,20 @@ const devServerConfig = () => (config) => {
     // compress: true,
     disableHostCheck: true,
     hot: true,
-    proxy: {
-      '/api': {
-        target: 'http://localhost:7001',
-        changeOrigin: true,
-        pathRewrite: {
-          '^/api': '/api',
-        },
-      },
-    },
-    // after: (app) => {
-    //   console.log(app);
+    // proxy: {
+    //   '/api': {
+    //     target: 'http://localhost:7001',
+    //     changeOrigin: true,
+    //     pathRewrite: {
+    //       '^/api': '/api',
+    //     },
+    //   },
     // },
+    overlay: {
+      warnings: false,
+      errors: true,
+    },
+    before: require('./mock/server'),
   };
 };
 

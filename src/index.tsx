@@ -2,6 +2,8 @@ import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
+import { ConnectedRouter } from 'connected-react-router';
+import history from '@/utils/history';
 import createStore from './store';
 import PageLoading from '@/components/PageLoading';
 import App from './components/App';
@@ -19,7 +21,9 @@ const render = () => {
       <Provider store={store}>
         <PersistGate loading={<PageLoading />} persistor={persistor}>
           <Suspense fallback={<PageLoading />}>
-            <App />
+            <ConnectedRouter history={history}>
+              <App />
+            </ConnectedRouter>
           </Suspense>
         </PersistGate>
       </Provider>

@@ -1,5 +1,5 @@
 import React, { lazy } from 'react';
-import { HashRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import NotFound from '@/pages/NotFound';
 import AuthRoute from '../AuthRoute';
 
@@ -15,27 +15,25 @@ const demo = () => <div>ceshi </div>;
 
 const App: React.FC = () => {
   return (
-    <HashRouter basename="/">
-      <Switch>
-        <Route path="/404" component={NotFound} />
-        <AuthRoute
-          path="/user/center"
-          component={demo}
-          authed={false}
-          redirectTo="/user/login"
-          exact
-        />
-        <Route path="/home" exact component={Home} />
-        <Route path="/lease" exact component={Lease} />
-        <Route path="/schedule" exact component={Schedule} />
-        <Route path="/entire/:houseTypeId?" exact component={Entire} />
-        <Route path="/house/detail/:houseId?" exact component={HouseDetail} />
-        <Route path="/user/login" exact component={UserLogin} />
-        <Route path="/user/register" exact component={UserRegister} />
-        <Route path="/" exact render={() => <Redirect to="/home" />} />
-        <Route render={() => <Redirect to="/404" />} />
-      </Switch>
-    </HashRouter>
+    <Switch>
+      <Route path="/404" component={NotFound} />
+      <AuthRoute
+        path="/user/center"
+        component={demo}
+        authed={false}
+        redirectTo="/user/login"
+        exact
+      />
+      <Route path="/home" exact component={Home} />
+      <Route path="/lease" exact component={Lease} />
+      <Route path="/schedule" exact component={Schedule} />
+      <Route path="/entire/:houseTypeId?" exact component={Entire} />
+      <Route path="/house/detail/:houseId?" exact component={HouseDetail} />
+      <Route path="/user/login" exact component={UserLogin} />
+      <Route path="/user/register" exact component={UserRegister} />
+      <Route path="/" exact render={() => <Redirect to="/home" />} />
+      <Route render={() => <Redirect to="/404" />} />
+    </Switch>
   );
 };
 

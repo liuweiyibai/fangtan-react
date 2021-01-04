@@ -1,39 +1,34 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment } from 'react';
 import { BsChevronLeft } from 'react-icons/bs';
 import { useHistory, Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { Toast } from 'antd-mobile';
+import { useDispatch, useSelector } from 'react-redux';
 import { List, InputItem, Button, WhiteSpace } from 'antd-mobile';
 import { BsPhone, BsUnlock } from 'react-icons/bs';
 import HeaderLayout from '@/layouts/PageLayout/HeaderLayout';
 import BodyLayout from '@/layouts/PageLayout/BodyLayout';
-import { fetchUserLogin } from '@/store/system/thunks';
-
+import { loginIn } from '@/store/user/slice';
 import styles from './index.module.less';
+import { RootState } from '@/store/reducers';
 
 const UserLogin: React.FC<{}> = () => {
-  const [loading, setLoading] = useState<boolean>(false);
   const history = useHistory();
   const dispatch = useDispatch();
+  const isPending = useSelector<RootState, boolean>(
+    (state) => state.user.isPending,
+  );
+
   const handleBack = () => {
     history.goBack();
   };
 
-  const handleClick = async () => {
-    setLoading(true);
-    try {
-      const resp = await dispatch(
-        fetchUserLogin({
-          username: '',
-          password: '',
-        }),
-      );
-      console.log(resp);
-      setLoading(false);
-    } catch (error) {
-      Toast.fail(error.message || '用户名或密码错误！');
-      setLoading(false);
-    }
+  const handleClick = () => {
+    dispatch(
+      loginIn({
+        username: '',
+        password: '',
+        checkout: false,
+      }),
+    );
   };
 
   return (
@@ -58,7 +53,11 @@ const UserLogin: React.FC<{}> = () => {
           </List>
           <WhiteSpace />
           <div className={styles['user-form--btn']}>
-            <Button disabled={loading} loading={loading} onClick={handleClick}>
+            <Button
+              disabled={isPending}
+              loading={isPending}
+              onClick={handleClick}
+            >
               登录
             </Button>
           </div>

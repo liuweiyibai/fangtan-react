@@ -1,11 +1,13 @@
 import React, { Fragment } from 'react';
-import { ActionSheet } from 'antd-mobile';
+import { ActionSheet, Button } from 'antd-mobile';
 import { useHistory } from 'react-router-dom';
 import { BsBoxArrowUpRight, BsChevronLeft } from 'react-icons/bs';
 import HeaderLayout from '@/layouts/PageLayout/HeaderLayout';
 import BodyLayout from '@/layouts/PageLayout/BodyLayout';
 
 import styles from './index.module.less';
+import FooterLayout from '@/layouts/PageLayout/FooterLayout';
+import LoopImage from './LoopImage';
 
 interface dataListType {
   url?: string;
@@ -37,9 +39,9 @@ const showShareActionSheet = () => {
       title: '分享到',
     },
     (...args) => {
-      console.log('====================================');
-      console.log(args);
-      console.log('====================================');
+      // console.log('====================================');
+      // console.log(args);
+      // console.log('====================================');
       return new Promise((resolve) => {
         setTimeout(resolve, 1000);
       });
@@ -69,8 +71,14 @@ const HouseDtail: React.FC = () => {
       />
 
       <BodyLayout>
-        <section className={styles['house-detail--body']}></section>
+        <section className={styles['house-detail--body']}>
+          <LoopImage />
+        </section>
       </BodyLayout>
+
+      <FooterLayout>
+        <Button className={styles['house-detail--footer']}>我要看房</Button>
+      </FooterLayout>
     </Fragment>
   );
 };

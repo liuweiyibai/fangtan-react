@@ -1,43 +1,94 @@
-const express = require('express');
-const Mock = require('mockjs'); //引入mock模块
-const app = express();
-const api = express();
+const chokidar = require('chokidar');
+const bodyParser = require('body-parser');
+const chalk = require('chalk');
+const path = require('path');
+const Mock = require('mockjs');
 
-app.use('/api', api);
+const mockDir = path.join(process.cwd(), 'mock');
 
-api.get('/test', function (req, res) {
-  res.json(
-    Mock.mock({
-      code: 200,
-      'data|1-9': [
-        {
-          'name|5-8': /[a-zA-Z]/,
-          'id|+1': 1,
-          'value|0-500': 20,
-        },
-      ],
+/**
+ * 注册路由
+ * @param {*} app
+ */
+function registerRoutes(app) {
+  let mockLastIndex;
+  const { mocks } = require('./mocks/index.js');
+  const mocksForServer = mocks.map((route) => {
+    return responseFake(route.url, route.type, route.response);
+  });
+  for (const mock of mocksForServer) {
+    app[mock.type](mock.url, mock.response);
+    mockLastIndex = app._router.stack.length;
+  }
+  const mockRoutesLength = Object.keys(mocksForServer).length;
+  return {
+    mockRoutesLength: mockRoutesLength,
+    mockStartIndex: mockLastIndex - mockRoutesLength,
+  };
+}
+
+function unregisterRoutes() {
+  Object.keys(require.cache).forEach((i) => {
+    if (i.includes(mockDir)) {
+      delete require.cache[require.resolve(i)];
+    }
+  });
+}
+
+// for mock server
+const responseFake = (url, type, respond) => {
+  return {
+    url: new RegExp(`${process.env.REACT_APP_BASE_API}${url}`),
+    type: type || 'get',
+    response(req, res) {
+      console.log('request invoke:' + req.path);
+      res.json(
+        Mock.mock(respond instanceof Function ? respond(req, res) : respond),
+      );
+    },
+  };
+};
+
+module.exports = (app) => {
+  // parse app.body
+  // https://expressjs.com/en/4x/api.html#req.body
+  app.use(bodyParser.json());
+  app.use(
+    bodyParser.urlencoded({
+      extended: true,
     }),
   );
-});
-api.post(`/user/login`, (req, res) => {
-  res.json({
-    code: 400,
-    data: {
-      username: 'james',
-      token: '2222',
-    },
-    message: 'success',
-  });
-});
 
-// app.use(function (req, res, next) {
-//   res.header('Access-Control-Allow-Origin', '*');
-//   res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
-//   res.header('Access-Control-Allow-Headers', 'X-Requested-With');
-//   res.header('Access-Control-Allow-Headers', 'Content-Type');
-//   next();
-// });
+  const mockRoutes = registerRoutes(app);
+  var mockRoutesLength = mockRoutes.mockRoutesLength;
+  var mockStartIndex = mockRoutes.mockStartIndex;
 
-console.log('===============mock server is running 7001================');
+  // 监听文件变化，然后重启 server
+  chokidar
+    .watch(mockDir, {
+      ignoreInitial: true,
+    })
+    .on('all', (event, path) => {
+      if (event === 'change' || event === 'add') {
+        try {
+          // remove mock routes stack
+          app._router.stack.splice(mockStartIndex, mockRoutesLength);
 
-app.listen('7001');
+          // clear routes cache
+          unregisterRoutes();
+
+          const mockRoutes = registerRoutes(app);
+          mockRoutesLength = mockRoutes.mockRoutesLength;
+          mockStartIndex = mockRoutes.mockStartIndex;
+
+          console.log(
+            chalk.magentaBright(
+              `\n > Mock Server hot reload success! changed  ${path}`,
+            ),
+          );
+        } catch (error) {
+          console.log(chalk.redBright(error));
+        }
+      }
+    });
+};
