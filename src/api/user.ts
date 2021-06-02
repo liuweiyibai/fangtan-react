@@ -1,12 +1,26 @@
 import http from '@/utils/http';
+import { Method } from 'axios';
+interface RequestParams {
+  url: string;
+  method: Method;
+  data?: any;
+  params?: any;
+}
 
-export const userLogin = <R = {}>(data: any) =>
+export const userLogin = <R = {}>(data: any) => {
   // !get 和 post 的传参方式记得看函数签名
-  http<R>({
+  let params: RequestParams = {
     url: '/user/login',
     method: 'post',
     data,
-  });
+  };
+  userLogin.prototype.cancel = (params: RequestParams) => {
+    console.log('====================================');
+    console.log(params);
+    console.log('====================================');
+  };
+  return http<R>(params);
+};
 
 export const getMe = <R = {}>() => http<R>({ url: '/user/me' });
 

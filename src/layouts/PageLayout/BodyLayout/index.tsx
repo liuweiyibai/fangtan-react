@@ -25,9 +25,11 @@ PageBody.auth = true;
 PageBody.defaultProps = {
   className: '',
 };
-PageBody.defaultProps = {
-  className: '',
-  style: { background: 'red' },
-};
+
+// FC 组件自带 defaultProps 属性
+// PageBody.defaultProps = {
+//   className: '',
+//   // style: { background: 'red' },
+// };
 
 export default PageBody;

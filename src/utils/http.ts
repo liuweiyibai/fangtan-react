@@ -10,8 +10,8 @@ export interface PendingType {
   cancel: Function;
 }
 
-// 取消重复请求
-const pending: Array<PendingType> = [];
+// 取消重复请求，或者取消请求
+export const pending: Array<PendingType> = [];
 const CancelToken = axios.CancelToken;
 
 // axios 实例

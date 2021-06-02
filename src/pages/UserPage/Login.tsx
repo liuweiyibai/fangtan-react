@@ -45,10 +45,10 @@ const UserLogin: React.FC<{}> = () => {
         <div className={styles['user-login--content']}>
           <List>
             <InputItem labelNumber={1} placeholder="请输入手机号" editable>
-              <BsPhone />
+              <BsPhone className="ignore" />
             </InputItem>
             <InputItem labelNumber={1} type="password" placeholder="请输入密码">
-              <BsUnlock />
+              <BsUnlock className="ignore" />
             </InputItem>
           </List>
           <WhiteSpace />
