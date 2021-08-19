@@ -8,6 +8,7 @@
     <meta name="description" content="轻松租房 乐享生活" />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
     <title>房嫂管家</title>
     <style>
       .loading {
@@ -142,6 +143,15 @@
         }
       }
     </style>
+
+    <% for (var i in htmlWebpackPlugin.options.cdns) { %>
+      <% if(htmlWebpackPlugin.options.cdns[i].path.endsWith('.css')){%>
+        <link rel="stylesheet" href="<%= htmlWebpackPlugin.options.cdns[i].path %>"/>
+      <% }else{%>
+        <script src="<%= htmlWebpackPlugin.options.cdns[i].path %>"></script>
+      <% } %>
+    <% } %>
+
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

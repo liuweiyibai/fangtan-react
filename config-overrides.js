@@ -1,4 +1,12 @@
 const path = require('path');
+const cdnDependencies = require('./config/cdn');
+
+// 设置不参与构建的库
+const externals = {};
+cdnDependencies.forEach((pkg) => {
+  externals[pkg.name] = pkg.var;
+});
+
 const {
   override,
   addDecoratorsLegacy,
@@ -26,7 +34,8 @@ const isProduction = process.env.NODE_ENV === 'production';
 // const REACT_APP_BASE_API = process.env.REACT_APP_BASE_API;
 
 const publicPath = isProduction
-  ? 'https://liuweiyibai.github.io/fangtan-react/'
+  ? // ? 'https://liuweiyibai.github.io/fangtan-react/'
+    '/'
   : '/';
 
 function invade(target, name, callback) {
@@ -36,6 +45,21 @@ function invade(target, name, callback) {
     }
   });
 }
+
+const addCdn = () => (config) => {
+  if (isProduction) {
+    if (cdnDependencies.length > 0) {
+      const htmlWebpackPlugin = config.plugins.find(
+        (plugin) => plugin.constructor.name === 'HtmlWebpackPlugin',
+      );
+      const deepMerge = require('deepmerge');
+      htmlWebpackPlugin.options = deepMerge(htmlWebpackPlugin.options, {
+        cdns: cdnDependencies,
+      });
+      return config;
+    }
+  }
+};
 
 // 自定义配置
 const addCustomize = () => (config) => {
@@ -105,12 +129,12 @@ const addCustomize = () => (config) => {
           test: /[\\/]node_modules[\\/]lodash[\\/]/,
           chunks: 'all',
         },
-        reactLib: {
-          name: 'react-lib', // 单独将 react系列 拆包
-          priority: 20,
-          test: /[\\/]node_modules[\\/](react|react-dom|react-router-dom)[\\/]/,
-          chunks: 'all',
-        },
+        // reactLib: {
+        //   name: 'react-lib', // 单独将 react系列 拆包
+        //   priority: 20,
+        //   test: /[\\/]node_modules[\\/](react|react-dom|react-router-dom)[\\/]/,
+        //   chunks: 'all',
+        // },
       },
     };
 
@@ -122,8 +146,9 @@ const addCustomize = () => (config) => {
     );
 
     config.optimization.runtimeChunk = 'single';
-  }
 
+    config.externals = externals;
+  }
   return config;
 };
 
@@ -151,117 +176,119 @@ const devServerConfig = () => (config) => {
   };
 };
 
-module.exports = {
-  webpack: override(
-    // 增加别名
-    addWebpackAlias({
-      '@': resolve('src'),
-    }),
+const webpackOveride = override(
+  // 增加别名
+  addWebpackAlias({
+    '@': resolve('src'),
+  }),
 
-    // 增加装饰器
-    addDecoratorsLegacy(),
+  // 增加装饰器
+  addDecoratorsLegacy(),
 
-    // 添加 less 的使用
-    addLessLoader({
-      // 也可以在上面 loader 中添加
-      /**
-       * 会添加到每一个 less 文件之前，所以不能添加全局样式文件，和cssreset等
-       */
-      additionalData: `@import "${join('./src/styles/variable.less')}";`,
-      lessOptions: {
-        strictMath: true,
-        noIeCompat: true,
-        modifyVars: {},
-        cssLoaderOptions: {},
-        cssModules: {
-          localIdentName: '[path][name]__[local]--[hash:base64:5]',
-        },
+  // 添加 less 的使用
+  addLessLoader({
+    // 也可以在上面 loader 中添加
+    /**
+     * 会添加到每一个 less 文件之前，所以不能添加全局样式文件，和cssreset等
+     */
+    additionalData: `@import "${join('./src/styles/variable.less')}";`,
+    lessOptions: {
+      strictMath: true,
+      noIeCompat: true,
+      modifyVars: {},
+      cssLoaderOptions: {},
+      cssModules: {
+        localIdentName: '[path][name]__[local]--[hash:base64:5]',
       },
+    },
+  }),
+
+  // 按需引入组件
+  fixBabelImports('antd-mobile', {
+    style: 'css',
+    libraryDirectory: 'es',
+  }),
+
+  // lodash 按需加载
+  fixBabelImports('lodash', {
+    libraryDirectory: 'es',
+    camel2DashComponentName: false,
+  }),
+
+  // postcss 插件
+  addPostcssPlugins([
+    require('postcss-px-to-viewport')({
+      viewportWidth: 375, // 视窗的宽度，对应的是我们设计稿的宽度，一般是375
+      unitPrecision: 3, // 指定`px`转换为视窗单位值的小数位数（很多时候无法整除）
+      viewportUnit: 'vw', // 指定需要转换成的视窗单位，建议使用
+
+      // 指定不转换为视窗单位的类，可以自定义，可以无限添加,建议定义一至两个通用的类名
+      selectorBlackList: ['.am', '.ignore'],
+      minPixelValue: 1, // 小于或等于`1px`不转换为视窗单位，你也可以设置为你想要的值
+      mediaQuery: false, // 允许在媒体查询中转换`px`
+      exclude: [/node_modules/],
+      propList: ['*', '!border-radius'],
+    }),
+    require('postcss-normalize')(),
+  ]),
+
+  process.env.REACT_APP_BUNDLE_VISUALIZE == 1 &&
+    addBundleVisualizer({
+      analyzerMode: 'server',
     }),
 
-    // 按需引入组件
-    fixBabelImports('antd-mobile', {
-      style: 'css',
-      libraryDirectory: 'es',
+  addCustomize(),
+
+  addWebpackPlugin(
+    // 进度条
+    new WebpackBar({
+      profile: true,
     }),
 
     // lodash 按需加载
-    fixBabelImports('lodash', {
-      libraryDirectory: 'es',
-      camel2DashComponentName: false,
+    new LodashWebpackPlugin({
+      collections: true,
+      paths: true,
     }),
 
-    // postcss 插件
-    addPostcssPlugins([
-      require('postcss-px-to-viewport')({
-        viewportWidth: 375, // 视窗的宽度，对应的是我们设计稿的宽度，一般是375
-        unitPrecision: 3, // 指定`px`转换为视窗单位值的小数位数（很多时候无法整除）
-        viewportUnit: 'vw', // 指定需要转换成的视窗单位，建议使用
-
-        // 指定不转换为视窗单位的类，可以自定义，可以无限添加,建议定义一至两个通用的类名
-        selectorBlackList: ['.am', '.ignore'],
-        minPixelValue: 1, // 小于或等于`1px`不转换为视窗单位，你也可以设置为你想要的值
-        mediaQuery: false, // 允许在媒体查询中转换`px`
-        exclude: [/node_modules/],
-        propList: ['*', '!border-radius'],
-      }),
-      require('postcss-normalize')(),
-    ]),
-
-    process.env.REACT_APP_BUNDLE_VISUALIZE == 1 &&
-      addBundleVisualizer({
-        analyzerMode: 'server',
-      }),
-
-    addCustomize(),
-
-    addWebpackPlugin(
-      // 进度条
-      new WebpackBar({
-        profile: true,
-      }),
-
-      // lodash 按需加载
-      new LodashWebpackPlugin({
-        collections: true,
-        paths: true,
-      }),
-
-      new WebpackBuildNotifierPlugin({
-        title: 'mission complete',
-        suppressSuccess: true,
-      }),
-    ),
-
-    // 开发模式下生成  css souceMap
-    !isProduction &&
-      adjustStyleLoaders(({ use }) => {
-        // use [] 包括所有的 style 系列 loader
-        const [, css, postcss, resolve, processor] = use;
-        css.options.sourceMap = true; // css-loader
-        postcss.options.sourceMap = true; // postcss-loader
-        if (resolve) {
-          resolve.options.sourceMap = true; // resolve-url-loader
-        }
-
-        if (processor && processor.loader.includes('less-loader')) {
-          processor.options.sourceMap = true; // less-loader
-
-          // 会添加到每一个 less 文件之前，所以不能添加全局样式文件，和cssreset等
-          // 建议添加less 变量函数等
-          // 其效果和上面 addLessLoader 一样，二者保留其一即可
-          // use.push({
-          //   loader: 'style-resources-loader',
-          //   options: {
-          //     patterns: path.resolve(__dirname, 'src/styles/global.less'), //全局引入公共的scss 文件
-          //   },
-          // });
-        }
-      }),
+    new WebpackBuildNotifierPlugin({
+      title: 'mission complete',
+      suppressSuccess: true,
+    }),
   ),
 
-  devServer: overrideDevServer(devServerConfig()),
+  // 开发模式下生成  css souceMap
+  !isProduction &&
+    adjustStyleLoaders(({ use }) => {
+      // use [] 包括所有的 style 系列 loader
+      const [, css, postcss, resolve, processor] = use;
+      css.options.sourceMap = true; // css-loader
+      postcss.options.sourceMap = true; // postcss-loader
+      if (resolve) {
+        resolve.options.sourceMap = true; // resolve-url-loader
+      }
 
+      if (processor && processor.loader.includes('less-loader')) {
+        processor.options.sourceMap = true; // less-loader
+
+        // 会添加到每一个 less 文件之前，所以不能添加全局样式文件，和cssreset等
+        // 建议添加less 变量函数等
+        // 其效果和上面 addLessLoader 一样，二者保留其一即可
+        // use.push({
+        //   loader: 'style-resources-loader',
+        //   options: {
+        //     patterns: path.resolve(__dirname, 'src/styles/global.less'), //全局引入公共的scss 文件
+        //   },
+        // });
+      }
+    }),
+
+  isProduction && addCdn(),
+);
+
+module.exports = {
+  webpack: webpackOveride,
+  devServer: overrideDevServer(devServerConfig()),
   paths: function (paths, env) {
     // 配置打包后的文件位置
     let dir = process.env.BUILD_PATH || 'dist';

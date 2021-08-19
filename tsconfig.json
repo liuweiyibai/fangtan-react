@@ -28,7 +28,6 @@
   "extends": "./tsconfig.paths.json",
   "include": [
     "mock/**/*",
-    "src/**/*",
-    "src/components/.tsx"
+    "src/**/*"
   ]
 }
