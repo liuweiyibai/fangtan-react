@@ -151,6 +151,14 @@ const addCustomize = () => (config) => {
       }),
     );
   }
+
+  if (isProduction) {
+    const manifestPluginIndex = config.plugins.findIndex((t) => {
+      return t.opts && t.opts.fileName === 'asset-manifest.json';
+    });
+    config.plugins.splice(manifestPluginIndex,1)
+  }
+
   return config;
 };
 

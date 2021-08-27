@@ -4,11 +4,7 @@
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
     <meta name="description" content="轻松租房 乐享生活" />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-
     <title>房嫂管家</title>
     <style>
       .loading {
@@ -144,6 +140,7 @@
       }
     </style>
 
+    <!-- cdn 资源 -->
     <% for (var i in htmlWebpackPlugin.options.cdns) { %>
       <% if(htmlWebpackPlugin.options.cdns[i].path.endsWith('.css')){%>
         <link rel="stylesheet" href="<%= htmlWebpackPlugin.options.cdns[i].path %>"/>
