@@ -138,16 +138,18 @@ const addCustomize = () => (config) => {
       },
     };
 
+    // 默认文件名 runtime.[hash].js
+    config.optimization.runtimeChunk = 'single';
+
+    config.externals = externals;
+
     config.plugins.push(
+      // 作用是将 config.optimization.runtimeChunk 生成的文件注入到 index.html 中，不受缓存控制
       new ScriptExtHtmlWebpackPlugin({
         // `runtime` must same as runtimeChunk name. default is `runtime`
         inline: /runtime\..*\.js$/,
       }),
     );
-
-    config.optimization.runtimeChunk = 'single';
-
-    config.externals = externals;
   }
   return config;
 };
