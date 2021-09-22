@@ -39,9 +39,9 @@ const publicPath = isProduction
   : '/';
 
 function invade(target, name, callback) {
-  target.forEach((item) => {
+  target.forEach((item,i) => {
     if (item.constructor.name === name) {
-      callback(item);
+      callback(item,i);
     }
   });
 }
@@ -138,7 +138,7 @@ const addCustomize = () => (config) => {
       },
     };
 
-    // 默认文件名 runtime.[hash].js
+    // 当配置项为single时，默认文件名 runtime.[hash].js
     config.optimization.runtimeChunk = 'single';
 
     config.externals = externals;
@@ -214,10 +214,10 @@ const webpackOveride = override(
   }),
 
   // 按需引入组件
-  fixBabelImports('antd-mobile', {
-    style: 'css',
-    libraryDirectory: 'es',
-  }),
+  // fixBabelImports('antd-mobile', {
+  //   style: 'css',
+  //   libraryDirectory: 'es',
+  // }),
 
   // lodash 按需加载
   fixBabelImports('lodash', {
@@ -262,7 +262,7 @@ const webpackOveride = override(
     }),
 
     new WebpackBuildNotifierPlugin({
-      title: 'mission complete',
+      title: '任务构建完成',
       suppressSuccess: true,
     }),
   ),
